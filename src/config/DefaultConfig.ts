@@ -19,10 +19,10 @@ export function getDefaultConfig(): IConfigSchema {
       file: resolveRelativePath("faucet-store.db"),
     },
 
-    faucetTitle: "Test Faucet",
-    faucetImage: "/images/fauceth_420.jpg",
-    faucetHomeHtml: "",
-    faucetCoinSymbol: "ETH",
+    faucetTitle: "Diesis Testnet Faucet",
+    faucetImage: "",
+    faucetHomeHtml: '<div class="pow-info"><h5>Diesis Testnet</h5>Mine a short proof of work in your browser to claim DS for testing on Diesis.</div>',
+    faucetCoinSymbol: "DS",
     faucetCoinType: FaucetCoinType.NATIVE,
     faucetCoinContract: null,
     faucetLogFile: null,
@@ -40,19 +40,19 @@ export function getDefaultConfig(): IConfigSchema {
     ethTxPrioFee: 2000000000,
     ethMaxPending: 20,
     ethQueueNoFunds: false,
-    ethTxExplorerLink: null,
+    ethTxExplorerLink: "https://explorer.testnet.diesis.xyz/tx/{txid}",
 
-    maxDropAmount: 1000000000000000000, // 1 ETH
-    minDropAmount: 10000000000000000, // 0.01 ETH
+    maxDropAmount: 1000000000000000000, // 1 native token
+    minDropAmount: 10000000000000000, // 0.01 native token
     sessionTimeout: 86400,
     sessionCleanup: 2592000,
     sessionSaveTime: 120,
 
     modules: {},
 
-    spareFundsAmount: 10000000000000000, // 0.01 ETH
-    noFundsBalance: 100000000000000000, // 0.1 ETH
-    lowFundsBalance: 10000000000000000000, // 10 ETH
+    spareFundsAmount: 10000000000000000, // 0.01 native token
+    noFundsBalance: 100000000000000000, // 0.1 native token
+    lowFundsBalance: 10000000000000000000, // 10 native tokens
     lowFundsWarning: true,
     noFundsError: true,
     rpcConnectionError: true,
@@ -65,10 +65,9 @@ export function getDefaultConfig(): IConfigSchema {
       yaml: "faucet-status.yaml",
     },
     resultSharing: {
-      preHtml: '<div class="sh-opt">Do you like the faucet? Give that project a <iframe src="https://ghbtns.com/github-btn.html?user=pk910&repo=PoWFaucet&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe></div>',
+      preHtml: "",
       postHtml: '',
       caption: null,
     },
   };
 }
-

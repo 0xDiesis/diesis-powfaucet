@@ -1,0 +1,120 @@
+# Diesis PoWFaucet config (example)
+version: 2
+
+# local sqlite database
+database:
+  driver: "sqlite"
+  file: "faucet-store.db"
+
+# logfile for faucet events
+faucetLogFile: "faucet-events.log"
+
+# optional pid file
+faucetPidFile: "faucet-pid.txt"
+
+# faucet http/ws server port
+serverPort: 8080
+
+# number of trusted proxy hops in front of the faucet
+httpProxyCount: 0
+
+# title shown in the UI
+faucetTitle: "Diesis Testnet Faucet"
+
+# set to an asset path or URL if you want a branded hero image
+faucetImage: ""
+
+# landing-page content
+faucetHomeHtml: |
+  <div class='pow-info'>
+    <h5>What is this faucet?</h5>
+    This is the self-serve PoW faucet for the Diesis Testnet.<br>
+    Complete a short browser proof of work to claim DS for testing.
+  </div>
+  <div class='pow-info'>
+    <h5>How does this work?</h5>
+    Enter a 0x-prefixed EVM address, start mining, and claim your DS once you reach the minimum reward.
+  </div>
+  <div class='pow-info'>
+    <h5>Need a larger drip?</h5>
+    Pair this PoW faucet with the Diesis GitHub faucet for authenticated developer allocations.
+  </div>
+
+# random secret used to sign and restore faucet sessions
+faucetSecret: "replace-with-a-long-random-secret"
+
+# Diesis RPC endpoint
+ethRpcHost: "http://127.0.0.1:8545/"
+
+# faucet wallet private key (hex, without 0x prefix)
+ethWalletKey: "feedbeef12340000feedbeef12340000feedbeef12340000feedbeef12340000"
+
+# Diesis chain id
+ethChainId: 19803
+
+# native token details
+faucetCoinSymbol: "DS"
+faucetCoinType: "native"
+
+# transaction settings
+ethTxGasLimit: 21000
+ethLegacyTx: false
+ethTxMaxFee: 100000000000  # 100 gwei
+ethTxPrioFee: 2000000000   # 2 gwei
+ethMaxPending: 20
+ethQueueNoFunds: false
+ethTxExplorerLink: "https://explorer.testnet.diesis.xyz/tx/{txid}"
+
+# drop sizing
+maxDropAmount: 10000000000000000000   # 10 DS
+minDropAmount: 1000000000000000000    # 1 DS
+
+# session lifecycle
+sessionTimeout: 86400
+sessionCleanup: 2592000
+sessionSaveTime: 120
+
+# funding thresholds
+spareFundsAmount: 10000000000000000000     # 10 DS
+noFundsBalance: 100000000000000000000      # 100 DS
+lowFundsBalance: 1000000000000000000000    # 1,000 DS
+
+modules:
+  ethinfo:
+    enabled: true
+    maxBalance: 10000000000000000000000  # 10,000 DS
+    denyContract: true
+
+  recurring-limits:
+    enabled: true
+    limits:
+      - limitCount: 1
+        limitAmount: 10000000000000000000  # 10 DS
+        duration: 86400
+      - limitCount: 2
+        limitAmount: 20000000000000000000  # 20 DS
+        duration: 172800
+        byAddrOnly: true
+
+  concurrency-limit:
+    enabled: true
+    concurrencyLimit: 1
+    byAddrOnly: false
+    byIPOnly: false
+
+  pow:
+    enabled: true
+    powShareReward: 20000000000000000      # 0.02 DS
+    verifyMinerMissPenaltyPerc: 10
+    verifyMinerRewardPerc: 15
+    powSessionTimeout: 3600
+    powIdleTimeout: 1800
+    powHashrateSoftLimit: 1000
+    powHashrateHardLimit: 1100
+    powDifficulty: 20
+    powHashAlgo: "argon2"
+
+buildSeoMeta:
+  title: "Diesis Testnet Faucet"
+  description: "Self-serve proof-of-work faucet for the Diesis testnet."
+  keywords: "diesis,faucet,testnet,powfaucet,evm,ds"
