@@ -8,6 +8,8 @@ on:
 jobs:
   build_docker:
     name: Build Docker Image
+    # Set repository variable ENABLE_FORK_PUBLISH=true to enable Docker publish steps in this fork.
+    if: vars.ENABLE_FORK_PUBLISH == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,8 +23,10 @@ jobs:
       - name: Get project versions
         id: version
         run: |
-          echo "server_version=$(cat package.json | jq ".version" | tr -d '"\r\n')" >> $GITHUB_OUTPUT
-          echo "client_version=$(cat faucet-client/package.json | jq ".version" | tr -d '"\r\n')" >> $GITHUB_OUTPUT
+          server_version="$(jq -r '.version' package.json)"
+          client_version="$(jq -r '.version' faucet-client/package.json)"
+          echo "server_version=$server_version" >> "$GITHUB_OUTPUT"
+          echo "client_version=$client_version" >> "$GITHUB_OUTPUT"
       - name: Build and push multi-arch images
         run: |
           docker buildx build \

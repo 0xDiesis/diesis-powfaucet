@@ -11,24 +11,28 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: '22'
+  # Set repository variable ENABLE_FORK_PUBLISH=true to enable release and Docker publish steps in this fork.
+
 jobs:
   run_tests:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - uses: actions/setup-node@v3
+      uses: docker/setup-buildx-action@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: 22
+        node-version: ${{ env.NODE_VERSION }}
 
     - run: npm install
     - run: npm run test-coverage
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -37,12 +41,12 @@ jobs:
     needs: [ run_tests ]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     # setup global dependencies
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: 22
+        node-version: ${{ env.NODE_VERSION }}
     - run: npm install -g pkg
 
     # build server project
@@ -76,13 +80,16 @@ jobs:
     # collect metadata
     - name: Get project versions
       run: |
-        echo "server_version=$(cat package.json | jq ".version" | tr -d '"\r\n')" >> $GITHUB_OUTPUT
-        echo "client_version=$(cat faucet-client/package.json | jq ".version" | tr -d '"\r\n')" >> $GITHUB_OUTPUT
+        server_version="$(jq -r '.version' package.json)"
+        client_version="$(jq -r '.version' faucet-client/package.json)"
+        echo "server_version=$server_version" >> "$GITHUB_OUTPUT"
+        echo "client_version=$client_version" >> "$GITHUB_OUTPUT"
       id: version
 
     # (re)create snapshot binary release
     - name: Update snapshot tag & remove previous snapshot release
-      uses: actions/github-script@v3
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
+      uses: actions/github-script@v7
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}          
         script: |
@@ -129,6 +136,7 @@ jobs:
             console.log(e)
           }
     - name: Create snapshot release
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
       uses: actions/create-release@v1
       id: create_release
       with:
@@ -157,6 +165,7 @@ jobs:
 
     # upload release artifacts
     - name: "Upload artifact: powfaucet-server-linux"
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -166,6 +175,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: "Upload artifact: powfaucet-server-win.exe"
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -175,6 +185,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: "Upload artifact: powfaucet-server-all.tar.gz"
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -184,6 +195,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: "Upload artifact: powfaucet-server-all.zip"
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -193,6 +205,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: "Upload artifact: powfaucet-static.tar.gz"
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -202,6 +215,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: "Upload artifact: powfaucet-static.zip"
+      if: vars.ENABLE_FORK_PUBLISH == 'true'
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -213,6 +227,7 @@ jobs:
   build_docker:
     name: Build Docker Image
     needs: [run_tests]
+    if: vars.ENABLE_FORK_PUBLISH == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
