@@ -18,8 +18,7 @@ concurrency:
 
 env:
   NODE_VERSION: "22"
-  # Enable once the repository is public or the GitHub plan supports Pages publish.
-  ENABLE_PAGES_PUBLISH: "false"
+  # Set repository variable ENABLE_PAGES_PUBLISH=true to publish to Pages.
 
 jobs:
   doublcov:
@@ -39,12 +38,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Doublcov
-        uses: doublesharp/doublcov@v0
-        with:
-          version: latest
-          install-only: "true"
-
       - name: Restore Doublcov history
         uses: actions/cache/restore@v4
         with:
@@ -60,7 +53,11 @@ jobs:
           npm run test-coverage
 
       - name: Build Doublcov report
-        run: doublcov build --lcov coverage/lcov.info --sources . --out coverage/report --mode static --no-open
+        uses: doublesharp/doublcov@v0
+        with:
+          version: latest
+          command: build
+          args: --lcov coverage/lcov.info --sources . --out coverage/report --history .doublcov/history.json --mode static
 
       - name: Save Doublcov history
         if: always() && hashFiles('.doublcov/history.json') != ''
@@ -89,7 +86,7 @@ jobs:
           include-hidden-files: true
 
       - name: Prepare Pages artifact
-        if: env.ENABLE_PAGES_PUBLISH == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/master' && hashFiles('coverage/report/index.html') != ''
+        if: vars.ENABLE_PAGES_PUBLISH == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/master' && hashFiles('coverage/report/index.html') != ''
         run: |
           mkdir -p pages/coverage
           cp -R coverage/report/. pages/coverage/
@@ -103,7 +100,7 @@ jobs:
           HTML
 
       - name: Upload Pages artifact
-        if: env.ENABLE_PAGES_PUBLISH == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/master' && hashFiles('pages/coverage/index.html') != ''
+        if: vars.ENABLE_PAGES_PUBLISH == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/master' && hashFiles('pages/coverage/index.html') != ''
         uses: actions/upload-pages-artifact@v3
         with:
           path: pages
@@ -116,7 +113,7 @@ jobs:
             echo
             if [ "${{ github.event_name }}" = "pull_request" ]; then
               echo "Download and extract the \`doublcov-report\` artifact, then preview it with \`doublcov open coverage/report\`."
-            elif [ "${{ env.ENABLE_PAGES_PUBLISH }}" = "true" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            elif [ "${{ vars.ENABLE_PAGES_PUBLISH }}" = "true" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
               echo "This run also publishes the report to GitHub Pages."
             fi
             echo
@@ -126,7 +123,7 @@ jobs:
   pages:
     name: Publish coverage page
     needs: doublcov
-    if: env.ENABLE_PAGES_PUBLISH == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    if: vars.ENABLE_PAGES_PUBLISH == 'true' && github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
