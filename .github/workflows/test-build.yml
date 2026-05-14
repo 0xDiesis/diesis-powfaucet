@@ -12,11 +12,11 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - uses: actions/setup-node@v3
+      uses: docker/setup-buildx-action@v4
+    - uses: actions/setup-node@v6
       with:
         node-version: 22
 
@@ -28,9 +28,9 @@ jobs:
     needs: [run_tests]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v6
       with:
         node-version: 22
     - run: npm install -g pkg
@@ -47,17 +47,17 @@ jobs:
     - run: pkg --compress Brotli .
 
     - name: Upload powfaucet.js artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         path: ./bundle/powfaucet.cjs
         name: powfaucet.js
     - name: Upload linux binary artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         path: ./bin/pow-faucet-server-linux
         name: powfaucet-server-linux
     - name: Upload windows binary artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         path: ./bin/pow-faucet-server-win.exe
         name: powfaucet-server-win.exe

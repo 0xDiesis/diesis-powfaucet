@@ -20,11 +20,11 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    - uses: actions/setup-node@v4
+      uses: docker/setup-buildx-action@v4
+    - uses: actions/setup-node@v6
       with:
         node-version: ${{ env.NODE_VERSION }}
 
@@ -32,7 +32,7 @@ jobs:
     - run: npm run test-coverage
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v6
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -41,10 +41,10 @@ jobs:
     needs: [ run_tests ]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     # setup global dependencies
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       with:
         node-version: ${{ env.NODE_VERSION }}
     - run: npm install -g pkg
@@ -89,34 +89,34 @@ jobs:
     # (re)create snapshot binary release
     - name: Update snapshot tag & remove previous snapshot release
       if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/github-script@v7
+      uses: actions/github-script@v9
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}          
         script: |
           try {
             var snapshotTag = "snapshot";
-            var snapshotRelease = await github.repos.getReleaseByTag({
+            var snapshotRelease = await github.rest.repos.getReleaseByTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: snapshotTag
             });
             if(snapshotRelease && snapshotRelease.data && snapshotRelease.data.tag_name == snapshotTag) {
               console.log("delete previous snapshot release");
-              await github.repos.deleteRelease({
+              await github.rest.repos.deleteRelease({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 release_id: snapshotRelease.data.id
               });
             }
 
-            var snapshotRef = await github.git.getRef({
+            var snapshotRef = await github.rest.git.getRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "tags/" + snapshotTag
             });
             if(snapshotRef && snapshotRef.data && snapshotRef.data.ref) {
               if(snapshotRef.data.object.sha !== context.sha) {
-                await github.git.updateRef({
+                await github.rest.git.updateRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   ref: "tags/" + snapshotTag,
@@ -125,7 +125,7 @@ jobs:
               }
             }
             else {
-              await github.git.createRef({
+              await github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: "tags/" + snapshotTag,
@@ -137,14 +137,12 @@ jobs:
           }
     - name: Create snapshot release
       if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/create-release@v1
-      id: create_release
-      with:
-        draft: false
-        prerelease: true
-        release_name: "Dev Snapshot"
-        tag_name: "snapshot"
-        body: |
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        cp ./bin/server-linux ./powfaucet-server-linux
+        cp ./bin/server-win.exe ./powfaucet-server-win.exe
+        cat > release-notes.md <<'EOF'
           ## Latest automatically built v2 executables. (Unstable development snapshot)
           Built from master branch (commit: ${{ github.sha }})
 
@@ -160,81 +158,28 @@ jobs:
           | [powfaucet-server-win.exe](https://github.com/pk910/PoWFaucet/releases/download/snapshot/powfaucet-server-win.exe) | PoWFaucet all-in-one executable for windows (NodeJS 18, 64bit) |
           | [powfaucet-server-linux](https://github.com/pk910/PoWFaucet/releases/download/snapshot/powfaucet-server-linux) | PoWFaucet all-in-one executable for linux (NodeJS 18, 64bit) |
           | powfaucet-static [.tar.gz](https://github.com/pk910/PoWFaucet/releases/download/snapshot/powfaucet-static.tar.gz) / [.zip](https://github.com/pk910/PoWFaucet/releases/download/snapshot/powfaucet-static.zip) | PoWFaucet static folder (optional, see [Operator Wiki](https://github.com/pk910/PoWFaucet/wiki/Operator-Wiki)) |
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-
-    # upload release artifacts
-    - name: "Upload artifact: powfaucet-server-linux"
-      if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./bin/server-linux
-        asset_name: powfaucet-server-linux
-        asset_content_type: application/octet-stream
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: "Upload artifact: powfaucet-server-win.exe"
-      if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./bin/server-win.exe
-        asset_name: powfaucet-server-win.exe
-        asset_content_type: application/octet-stream
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: "Upload artifact: powfaucet-server-all.tar.gz"
-      if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./powfaucet-server-all.tar.gz
-        asset_name: powfaucet-server-all.tar.gz
-        asset_content_type: application/gzip
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: "Upload artifact: powfaucet-server-all.zip"
-      if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./powfaucet-server-all.zip
-        asset_name: powfaucet-server-all.zip
-        asset_content_type: application/zip
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: "Upload artifact: powfaucet-static.tar.gz"
-      if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./powfaucet-static.tar.gz
-        asset_name: powfaucet-static.tar.gz
-        asset_content_type: application/gzip
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: "Upload artifact: powfaucet-static.zip"
-      if: vars.ENABLE_FORK_PUBLISH == 'true'
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./powfaucet-static.zip
-        asset_name: powfaucet-static.zip
-        asset_content_type: application/zip
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+        EOF
+        gh release create snapshot \
+          --prerelease \
+          --title "Dev Snapshot" \
+          --notes-file release-notes.md \
+          ./powfaucet-server-linux \
+          ./powfaucet-server-win.exe \
+          ./powfaucet-server-all.tar.gz \
+          ./powfaucet-server-all.zip \
+          ./powfaucet-static.tar.gz \
+          ./powfaucet-static.zip
   build_docker:
     name: Build Docker Image
     needs: [run_tests]
     if: vars.ENABLE_FORK_PUBLISH == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
