@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve",
     "build": "webpack --mode production",
-    "check-types": "tsc"
+    "check-types": "tsc --noEmit"
   },
   "author": "pk910 (https://pk910.de)",
   "license": "AGPL-3.0",
@@ -21,9 +21,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-class-properties": "^7.28.6",
+    "@babel/plugin-transform-object-rest-spread": "^7.28.6",
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-flow": "^7.24.7",
     "@babel/preset-react": "^7.24.7",

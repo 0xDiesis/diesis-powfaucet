@@ -4,8 +4,17 @@
 		"target": "esnext",
 		// path to output directory
 		"outDir": "./dist/",
+		"rootDir": "..",
 		// Search under node_modules for non-relative imports.
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
+		"ignoreDeprecations": "6.0",
+		"skipLibCheck": true,
+		"strict": false,
+		"noImplicitAny": false,
+		"strictNullChecks": false,
+		"strictPropertyInitialization": false,
+		"useUnknownInCatchVariables": false,
+		"noUncheckedSideEffectImports": false,
 		// Process & infer types from .js files.
 		"allowJs": true,
 		// Don't emit; allow Babel to transform files.
@@ -16,10 +25,8 @@
 		"jsx": "react",
 		
 		"lib": [
-			"es2015",
+			"esnext",
 			"dom.iterable",
-			"es2016.array.include",
-			"es2017.object",
 			"dom"
 		],
 		"module": "ESNext",
