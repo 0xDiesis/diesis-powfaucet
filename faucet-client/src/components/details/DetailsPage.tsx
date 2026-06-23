@@ -136,10 +136,10 @@ export class DetailsPage extends React.PureComponent<IDetailsPageProps, IDetails
     }
     else if(!this.state.sessionStatus) {
       return (
-        <div className="faucet-loading">
+        <div className="faucet-loading" role="status" aria-live="polite">
           <div className="loading-spinner">
-            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
-            <span className="spinner-text">Loading Session...</span>
+            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" alt="" />
+            <span className="spinner-text">Loading session</span>
           </div>
         </div>
       );
@@ -237,7 +237,7 @@ export class DetailsPage extends React.PureComponent<IDetailsPageProps, IDetails
               onClick={() => {
                 this.props.navigateFn("/");
               }}>
-                Return to startpage
+                Return to start
               </button>
           </div>
         </div>
@@ -346,4 +346,3 @@ export default (props) => {
     />
   );
 };
-

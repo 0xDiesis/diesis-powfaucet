@@ -4,13 +4,21 @@
 }
 
 .faucet-page .details-advanced a {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
   font-size: 9pt;
   margin: 4px 0;
-  color: darkgray;
+  color: var(--diesis-text-soft, #857c63);
 }
 
 .faucet-page .details-advanced .session-json {
-  border: 1px solid darkgray;
+  border: 1px solid var(--diesis-border, rgba(36, 39, 39, 0.2));
+  border-radius: 8px;
+  background: var(--diesis-surface-sunken, #f7efd0);
+  color: var(--diesis-text, #242727);
   font-size: 11pt;
+  max-width: 100%;
+  overflow: auto;
   padding: 16px;
 }

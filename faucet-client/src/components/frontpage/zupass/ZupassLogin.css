@@ -26,7 +26,7 @@
 }
 
 .faucet-page .faucet-zupass-auth .auth-field .auth-info {
-  color: #343a40;
+  color: var(--diesis-text-muted, #655f4d);
 }
 
 .faucet-page .faucet-zupass-auth .auth-ident-truncated {

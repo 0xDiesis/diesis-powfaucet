@@ -61,6 +61,8 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
         <input 
           className="form-control" 
           value={this.state.targetAddr} 
+          aria-label={inputTypes.join(" or ")}
+          autoComplete="off"
           placeholder={"Please enter " + (inputTypes.join(" or "))} 
           onChange={(evt) => this.setState({ targetAddr: evt.target.value })} 
         />
@@ -103,7 +105,7 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
             disabled={this.state.submitting}>
               {this.state.submitting ?
               <span className='inline-spinner'>
-                <img src={(this.props.faucetContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
+                <img src={(this.props.faucetContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" alt="" />
               </span>
               : null}
               {submitBtnCaption}

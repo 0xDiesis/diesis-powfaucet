@@ -90,7 +90,7 @@ export class FrontPage extends React.PureComponent<IFrontPageProps, IFrontPageSt
       <div className='page-frontpage'>
         <div className='faucet-frontimage'>
           {faucetImage ?
-            <img src={faucetImage} className="image" />
+            <img src={faucetImage} className="image" alt="" />
           : null}
         </div>
         <FaucetInput 

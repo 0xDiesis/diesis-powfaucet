@@ -158,14 +158,15 @@ export class FaucetPage extends React.PureComponent<IFaucetPageProps, IFaucetPag
 	public render(): React.ReactElement<IFaucetPageProps> {
     if(this.state.initializing) {
       return (
-        <div className="faucet-loading">
+        <div className="faucet-loading" role="status" aria-live="polite">
           <div className="loading-spinner">
-            <img src={(this.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
-            <span className="spinner-text">Loading...</span>
+            <img src={(this.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" alt="" />
+            <span className="spinner-text">Loading faucet</span>
           </div>
         </div>
       );
     }
+    const showBrandKicker = !/diesis/i.test(this.state.faucetConfig.faucetTitle);
     return (
       <div className='faucet-page' ref={(ref) => {
         this.faucetContainerElement = ref;
@@ -173,6 +174,7 @@ export class FaucetPage extends React.PureComponent<IFaucetPageProps, IFaucetPag
         <FaucetConfigContext.Provider value={this.state.faucetConfig}>
           <FaucetPageContext.Provider value={this.pageContext}>
             <div className="faucet-title">
+              {showBrandKicker ? <p className="faucet-kicker">Diesis faucet</p> : null}
               <h1 className="center">{this.state.faucetConfig.faucetTitle}</h1>
               <div className="faucet-status-link" onClick={() => this.onFaucetStatusClick()}></div>
             </div>

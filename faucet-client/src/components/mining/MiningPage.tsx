@@ -225,10 +225,10 @@ export class MiningPage extends React.PureComponent<IMiningPageProps, IMiningPag
     }
     else if(!this.state.loadedSession) {
       return (
-        <div className="faucet-loading">
+        <div className="faucet-loading" role="status" aria-live="polite">
           <div className="loading-spinner">
-            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
-            <span className="spinner-text">Loading...</span>
+            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" alt="" />
+            <span className="spinner-text">Loading mining session</span>
           </div>
         </div>
       );
@@ -393,4 +393,3 @@ export default (props) => {
     />
   );
 };
-

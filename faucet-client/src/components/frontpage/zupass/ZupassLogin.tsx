@@ -105,7 +105,7 @@ export class ZupassLogin extends React.PureComponent<IZupassLoginProps, IZupassL
           <a href="#" onClick={(evt) => evt.preventDefault()}>
             {this.state.popupOpen ?
               <span className='inline-spinner'>
-                <img src="/images/spinner.gif" className="spinner" />
+                <img src="/images/spinner.gif" className="spinner" alt="" />
               </span>
             : null}
             Login with Zupass

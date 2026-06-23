@@ -240,10 +240,10 @@ export class ClaimPage extends React.PureComponent<IClaimPageProps, IClaimPageSt
     }
     else if(!this.state.sessionStatus) {
       return (
-        <div className="faucet-loading">
+        <div className="faucet-loading" role="status" aria-live="polite">
           <div className="loading-spinner">
-            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
-            <span className="spinner-text">Loading Claim...</span>
+            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" alt="" />
+            <span className="spinner-text">Loading claim</span>
           </div>
         </div>
       );
@@ -306,7 +306,7 @@ export class ClaimPage extends React.PureComponent<IClaimPageProps, IClaimPageSt
                 onClick={() => {
                   this.props.navigateFn("/");
                 }}>
-                  Return to startpage
+                  Return to start
                 </button>
             </div>
           </div>
@@ -548,4 +548,3 @@ export default (props) => {
     />
   );
 };
-

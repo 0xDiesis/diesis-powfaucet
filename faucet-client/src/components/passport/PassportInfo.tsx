@@ -97,10 +97,10 @@ export class PassportInfo extends React.PureComponent<IPassportInfoProps, IPassp
     }
     else if(!this.state.passportInfo) {
       return (
-        <div className="faucet-loading">
+        <div className="faucet-loading" role="status" aria-live="polite">
           <div className="loading-spinner">
-            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
-            <span className="spinner-text">Loading passport details...</span>
+            <img src={(this.props.pageContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" alt="" />
+            <span className="spinner-text">Loading passport details</span>
           </div>
         </div>
       );

@@ -27,7 +27,14 @@
 
 .faucet-page .faucet-status .status-sessions td, 
 .faucet-page .faucet-status .status-sessions th {
-  padding: 0 12px;
+  padding: 6px 12px;
+  vertical-align: middle;
+}
+
+.faucet-page .faucet-status .card-title {
+  color: var(--diesis-text-strong, #171514);
+  font-family: var(--diesis-font-display, system-ui, sans-serif);
+  font-size: 18px;
 }
 
 .faucet-page .faucet-status .status-general {
@@ -37,4 +44,12 @@
 .faucet-page .faucet-status .status-general .status-title {
   display: inline-block;
   width: 180px;
+  color: var(--diesis-text-muted, #655f4d);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.faucet-page .faucet-status .status-general .status-value {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }

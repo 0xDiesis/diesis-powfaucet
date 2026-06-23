@@ -22,5 +22,5 @@
 }
 
 .faucet-page .faucet-auth .auth-field .auth-info {
-  color: #343a40;
+  color: var(--diesis-text-muted, #655f4d);
 }
