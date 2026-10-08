@@ -26,7 +26,7 @@ export interface IDetailsPageState {
 }
 
 export class DetailsPage extends React.PureComponent<IDetailsPageProps, IDetailsPageState> {
-  private updateTimer: NodeJS.Timeout;
+  private updateTimer: ReturnType<typeof setTimeout>;
   private loadingStatus: boolean;
   private lastStatusPoll: number;
 

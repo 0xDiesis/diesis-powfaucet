@@ -78,7 +78,7 @@ export class PoWMiner extends TypedEmitter<PoWMinerEvents> {
   private powParamsStr: string;
   private nonceQueue: IPoWMinerNonce[];
   private lastSaveNonce: number;
-  private updateStatsTimer: NodeJS.Timeout;
+  private updateStatsTimer: ReturnType<typeof setTimeout>;
   private totalShares: number;
   private lastShareTime: Date;
   private targetNoncePrefill: number;

@@ -2,7 +2,7 @@
 FROM --platform=$BUILDPLATFORM node:24.16.0-slim AS build-server-env
 WORKDIR /build
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY ./libs libs
 COPY ./tsconfig.json .
 COPY ./webpack.config.js .
@@ -15,7 +15,7 @@ WORKDIR /build
 COPY faucet-client/package*.json ./faucet-client/
 COPY ./libs libs
 COPY ./static static
-RUN cd faucet-client && npm install
+RUN cd faucet-client && npm ci
 COPY ./faucet-client faucet-client
 RUN cd faucet-client && node ./build-client.js
 

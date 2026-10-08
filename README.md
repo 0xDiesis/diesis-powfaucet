@@ -16,13 +16,18 @@ This repo is the self-serve PoW faucet only. For a larger authenticated drip, pa
 ## Quick Start
 
 ```bash
-pnpm install
+npm ci
+npm --prefix faucet-client ci
 cp faucet-config.diesis.example.yaml faucet-config.yaml
 # edit faucetSecret, ethRpcHost, ethWalletKey, and any operator-specific module settings
-pnpm build-client
-pnpm build
+npm run build-client
+npm run build
 node dist/app.js
 ```
+
+The server and client keep separate npm lockfiles. The Docker build uses `npm ci`
+for both stages so it installs the reviewed versions. Run `npm test` for the
+server suite and `npm --prefix faucet-client run check-types` for the browser types.
 
 The default Diesis sample config assumes:
 

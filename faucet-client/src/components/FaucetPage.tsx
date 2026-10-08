@@ -16,8 +16,6 @@ import QueueStatusPage from './status/QueueStatusPage';
 
 import './FaucetPage.scss'
 import { PoWMinerWorkerSrc, getPoWMinerDefaultSrc } from '../types/PoWMinerSrc';
-import path from 'path';
-import { URL } from 'url';
 import { joinUrl } from '../utils/QueryUtils';
 
 export interface IFaucetPageProps {
@@ -45,7 +43,7 @@ export interface IFaucetNotification {
   message: string;
   time?: number;
   timeout?: number;
-  timerId?: NodeJS.Timeout;
+  timerId?: ReturnType<typeof setTimeout>;
 }
 
 export interface IFaucetDialog {
@@ -65,7 +63,7 @@ export const FaucetPageContext = React.createContext<IFaucetContext>(null);
 export const FaucetConfigContext = React.createContext<IFaucetConfig>(null);
 
 export class FaucetPage extends React.PureComponent<IFaucetPageProps, IFaucetPageState> {
-  private configRefreshInterval: NodeJS.Timer;
+  private configRefreshInterval: ReturnType<typeof setInterval>;
   private faucetContainerElement: HTMLElement;
   private lastConfigRefresh = 0;
   private lastConfigRefreshStart = 0;
