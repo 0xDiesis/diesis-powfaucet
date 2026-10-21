@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_VERSION: "22"
+  NODE_VERSION: "26.12.1"
   # Set repository variable ENABLE_PAGES_PUBLISH=true to publish to Pages.
 
 jobs:

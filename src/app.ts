@@ -1,6 +1,7 @@
 import path, { dirname, basename } from "path";
 import { fileURLToPath } from "url";
 import { isMainThread, workerData } from "node:worker_threads";
+import { isSea } from "node:sea";
 import { faucetConfig, loadFaucetConfig, setAppBasePath } from "./config/FaucetConfig.js";
 import { FaucetWorkers } from "./common/FaucetWorker.js";
 import { EthWalletManager } from "./eth/EthWalletManager.js";
@@ -16,6 +17,16 @@ import { FaucetStatus } from "./services/FaucetStatus.js";
 import { createVoucher } from "./tools/createVoucher.js";
 
 (async () => {
+  if (isMainThread && process.argv[2] === "runtime-info") {
+    console.log(JSON.stringify({
+      node: process.version,
+      platform: process.platform,
+      arch: process.arch,
+      sea: isSea(),
+    }));
+    return;
+  }
+
   let srcfile: string;
   if(typeof require !== "undefined") {
     srcfile = require.main.filename;

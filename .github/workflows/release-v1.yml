@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '18.15.0'
+  NODE_VERSION: '26.12.1'
   # Set repository variable ENABLE_FORK_PUBLISH=true to enable Docker publish steps in this fork.
 
 jobs:

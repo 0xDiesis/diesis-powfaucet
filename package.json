@@ -6,13 +6,14 @@
   "bin": "bundle/powfaucet.cjs",
   "type": "module",
   "engines": {
-    "node": ">=24.16.0"
+    "node": ">=26.12.1"
   },
   "scripts": {
     "build": "tsc",
     "build-client": "cd faucet-client && node build-client.js",
     "start": "tsc && node dist/app.js",
     "bundle": "tsc && webpack --mode production",
+    "package:binaries": "pkg . --sea --compress Brotli --targets node26.12.1-linux-x64 --output bin/server-linux && pkg . --sea --compress Brotli --targets node26.12.1-win-x64 --output bin/server-win.exe",
     "test": "tsc -p tsconfig.test.json && cp -r libs dist-test/ && cp -r static dist-test/ && NODE_OPTIONS='--experimental-vm-modules' NODE_NO_WARNINGS=1 npx mocha --exit 'dist-test/tests/**/*.js'",
     "test-coverage": "tsc -p tsconfig.test.json && cp -r libs dist-test/ && cp -r static dist-test/ && NODE_OPTIONS='--experimental-vm-modules' NODE_NO_WARNINGS=1 npx c8 --reporter=text --reporter=lcov npx mocha --exit 'dist-test/tests/**/*.js'"
   },
@@ -31,9 +32,10 @@
       "faucet-config.example.yaml",
       "static/**/*"
     ],
+    "sea": true,
     "targets": [
-      "node24-linux-x64",
-      "node24-win-x64"
+      "node26.12.1-linux-x64",
+      "node26.12.1-win-x64"
     ],
     "outputPath": "bin"
   },
@@ -49,6 +51,7 @@
     "@types/randombytes": "^2.0.3",
     "@types/sinon": "^21.0.0",
     "@types/ws": "^8.5.12",
+    "@yao-pkg/pkg": "6.23.0",
     "c8": "^11.0.0",
     "chai": "^6.0.1",
     "mocha": "^12.0.3",

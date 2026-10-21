@@ -18,9 +18,9 @@ jobs:
       uses: docker/setup-buildx-action@v4
     - uses: actions/setup-node@v6
       with:
-        node-version: 22
+        node-version: 26.12.1
 
-    - run: npm install
+    - run: npm ci
     - run: npm run test
 
   build_binaries:
@@ -32,10 +32,9 @@ jobs:
 
     - uses: actions/setup-node@v6
       with:
-        node-version: 22
-    - run: npm install -g pkg
+        node-version: 26.12.1
 
-    - run: npm install
+    - run: npm ci
     - run: npm run bundle
 
     # build client project
@@ -44,7 +43,8 @@ jobs:
         npm install
         node ./build-client.js 
 
-    - run: pkg --compress Brotli .
+    - run: npm run package:binaries
+    - run: node scripts/verify-packaged-runtime.mjs bin/server-linux
 
     - name: Upload powfaucet.js artifact
       uses: actions/upload-artifact@v7
@@ -54,10 +54,26 @@ jobs:
     - name: Upload linux binary artifact
       uses: actions/upload-artifact@v7
       with:
-        path: ./bin/pow-faucet-server-linux
+        path: ./bin/server-linux
         name: powfaucet-server-linux
     - name: Upload windows binary artifact
       uses: actions/upload-artifact@v7
       with:
-        path: ./bin/pow-faucet-server-win.exe
+        path: ./bin/server-win.exe
         name: powfaucet-server-win.exe
+
+  verify_windows_binary:
+    name: Verify packaged Windows runtime
+    needs: [build_binaries]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 26.12.1
+    - run: npm ci
+    - uses: actions/download-artifact@v8
+      with:
+        name: powfaucet-server-win.exe
+        path: bin
+    - run: node scripts/verify-packaged-runtime.mjs bin/server-win.exe

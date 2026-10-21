@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '22'
+  NODE_VERSION: '26.12.1'
   # Set repository variable ENABLE_FORK_PUBLISH=true to enable npm, GitHub release, and Docker publish steps in this fork.
 
 jobs:
@@ -21,11 +21,14 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
 
-    - run: npm install
+    - run: npm ci
     - run: npm run test
 
   build_binaries:
     name: Build Binaries
+    outputs:
+      server_version: ${{ steps.version.outputs.server_version }}
+      client_version: ${{ steps.version.outputs.client_version }}
     needs: [run_tests]
     if: vars.ENABLE_FORK_PUBLISH == 'true'
     runs-on: ubuntu-latest
@@ -37,11 +40,10 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         registry-url: "https://registry.npmjs.org"
-    - run: npm install -g pkg
 
     # build server project
     - run: |
-        npm install
+        npm ci
         npm run bundle
 
     # build client project
@@ -50,14 +52,10 @@ jobs:
         npm install
         node ./build-client.js 
 
-    # publish npm packages
-    - run: |
-        npm set "//registry.npmjs.org/:_authToken=$NPM_TOKEN"
-        npm publish --access public || true
-        cd faucet-client
-        npm publish --access public || true
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    # Preserve the packages built alongside the qualified executables.
+    - run: npm pack --pack-destination .
+    - run: npm pack --pack-destination ..
+      working-directory: faucet-client
 
     # package bundled release
     - name: Package bundled release
@@ -74,7 +72,8 @@ jobs:
         zip -r powfaucet-static.zip static
 
     # build binaries
-    - run: pkg --compress Brotli --options no-warnings .
+    - run: npm run package:binaries
+    - run: node scripts/verify-packaged-runtime.mjs bin/server-linux
 
     # collect metadata
     - name: Get project versions
@@ -85,6 +84,57 @@ jobs:
         echo "client_version=$client_version" >> "$GITHUB_OUTPUT"
       id: version
 
+    - uses: actions/upload-artifact@v7
+      with:
+        name: powfaucet-server-win.exe
+        path: bin/server-win.exe
+    - uses: actions/upload-artifact@v7
+      with:
+        name: powfaucet-release-payload
+        path: |
+          bin/server-linux
+          bin/server-win.exe
+          *.tar.gz
+          *.zip
+          *.tgz
+
+  verify_windows_binary:
+    name: Verify packaged Windows runtime
+    needs: [build_binaries]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 26.12.1
+    - run: npm ci
+    - uses: actions/download-artifact@v8
+      with:
+        name: powfaucet-server-win.exe
+        path: bin
+    - run: node scripts/verify-packaged-runtime.mjs bin/server-win.exe
+
+  publish_release:
+    name: Publish qualified release artifacts
+    needs: [build_binaries, verify_windows_binary]
+    if: vars.ENABLE_FORK_PUBLISH == 'true'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/download-artifact@v8
+      with:
+        name: powfaucet-release-payload
+    - uses: actions/setup-node@v6
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        registry-url: "https://registry.npmjs.org"
+    - name: Publish qualified npm packages
+      run: |
+        for package in *.tgz; do
+          npm publish "$package" --access public || true
+        done
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     # create draft release
     - name: Create latest release
       env:
@@ -99,14 +149,14 @@ jobs:
           ### Release Artifacts
           | Release File  | Description |
           | ------------- | ------------- |
-          | powfaucet-server-all [.tar.gz](https://github.com/pk910/PoWFaucet/releases/download/v${{ steps.version.outputs.server_version }}/powfaucet-server-all.tar.gz) / [.zip](https://github.com/pk910/PoWFaucet/releases/download/v${{ steps.version.outputs.server_version }}/powfaucet-server-all.zip) | PoWFaucet server for execution with local nodejs (recommended) |
-          | [powfaucet-server-win.exe](https://github.com/pk910/PoWFaucet/releases/download/v${{ steps.version.outputs.server_version }}/powfaucet-server-win.exe) | PoWFaucet all-in-one executable for windows (NodeJS 18, 64bit) |
-          | [powfaucet-server-linux](https://github.com/pk910/PoWFaucet/releases/download/v${{ steps.version.outputs.server_version }}/powfaucet-server-linux) | PoWFaucet all-in-one executable for linux (NodeJS 18, 64bit) |
-          | powfaucet-static [.tar.gz](https://github.com/pk910/PoWFaucet/releases/download/v${{ steps.version.outputs.server_version }}/powfaucet-static.tar.gz) / [.zip](https://github.com/pk910/PoWFaucet/releases/download/v${{ steps.version.outputs.server_version }}/powfaucet-static.zip) | PoWFaucet static folder (optional, see [Operator Wiki](https://github.com/pk910/PoWFaucet/wiki/Operator-Wiki)) |
+          | powfaucet-server-all [.tar.gz](https://github.com/pk910/PoWFaucet/releases/download/v${{ needs.build_binaries.outputs.server_version }}/powfaucet-server-all.tar.gz) / [.zip](https://github.com/pk910/PoWFaucet/releases/download/v${{ needs.build_binaries.outputs.server_version }}/powfaucet-server-all.zip) | PoWFaucet server for execution with local nodejs (recommended) |
+          | [powfaucet-server-win.exe](https://github.com/pk910/PoWFaucet/releases/download/v${{ needs.build_binaries.outputs.server_version }}/powfaucet-server-win.exe) | PoWFaucet all-in-one executable for windows (NodeJS 26.12.1, 64bit) |
+          | [powfaucet-server-linux](https://github.com/pk910/PoWFaucet/releases/download/v${{ needs.build_binaries.outputs.server_version }}/powfaucet-server-linux) | PoWFaucet all-in-one executable for linux (NodeJS 26.12.1, 64bit) |
+          | powfaucet-static [.tar.gz](https://github.com/pk910/PoWFaucet/releases/download/v${{ needs.build_binaries.outputs.server_version }}/powfaucet-static.tar.gz) / [.zip](https://github.com/pk910/PoWFaucet/releases/download/v${{ needs.build_binaries.outputs.server_version }}/powfaucet-static.zip) | PoWFaucet static folder (optional, see [Operator Wiki](https://github.com/pk910/PoWFaucet/wiki/Operator-Wiki)) |
         EOF
-        gh release create "v${{ steps.version.outputs.server_version }}" \
+        gh release create "v${{ needs.build_binaries.outputs.server_version }}" \
           --draft \
-          --title "v${{ steps.version.outputs.server_version }}" \
+          --title "v${{ needs.build_binaries.outputs.server_version }}" \
           --notes-file release-notes.md \
           ./powfaucet-server-linux \
           ./powfaucet-server-win.exe \
@@ -114,4 +164,3 @@ jobs:
           ./powfaucet-server-all.zip \
           ./powfaucet-static.tar.gz \
           ./powfaucet-static.zip
-  
