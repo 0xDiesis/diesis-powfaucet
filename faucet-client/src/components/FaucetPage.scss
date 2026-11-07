@@ -474,7 +474,6 @@ html.powfaucet {color-scheme:light dark;--bs-body-color:var(--ds-ink);--bs-body-
 .pow-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; }
 .pow-header .ds-brand { min-height:44px; }
 .pow-header .theme-control form { display:contents; }
-@media(max-width:520px){ .pow-header .ds-lockup-product { display:none; } }
 
 .faucet-bootstrap .form-control, .faucet-bootstrap .form-select { border-color:var(--ds-control-border); }
 

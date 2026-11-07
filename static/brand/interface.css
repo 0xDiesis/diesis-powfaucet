@@ -18,8 +18,10 @@
   --diesis-surface-rgb: 244 240 233;
   --ds-warm: #79428e;
   --ds-shadow: 0 12px 40px #3925380c;
+  --diesis-app-site: #8e3d25;
+  --diesis-app-portal: #2d5f87;
   --diesis-app-explorer: #68428a;
-  --diesis-app-exchange: #956116;
+  --diesis-app-exchange: #7b641d;
   --diesis-app-mpc: #386b75;
   --diesis-app-mcp: #a33f5e;
   --diesis-app-faucet: #376b61;
@@ -43,8 +45,10 @@
   --diesis-surface-rgb: 28 25 34;
   --ds-warm: #cbb3ee;
   --ds-shadow: 0 12px 40px #00000018;
+  --diesis-app-site: #efb08a;
+  --diesis-app-portal: #98c7ed;
   --diesis-app-explorer: #c8aaed;
-  --diesis-app-exchange: #edc272;
+  --diesis-app-exchange: #dec970;
   --diesis-app-mpc: #93cad5;
   --diesis-app-mcp: #efa4bd;
   --diesis-app-faucet: #99caba;
@@ -53,6 +57,7 @@
 
 :root,
 :root[data-diesis-theme] {
+  --ds-app-stripe-width: 3px;
   --diesis-font-editorial:
     "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --diesis-font-display: "Avenir Next", ui-sans-serif, system-ui, sans-serif;
@@ -155,6 +160,11 @@ body {
 }
 .diesis-app-surface {
   background: var(--ds-bg);
+}
+/* Place on the full-width outer shell with its data-diesis-app identity. */
+.ds-app-shell {
+  border-top: var(--ds-app-stripe-width) solid
+    var(--ds-app-color, var(--ds-accent));
 }
 button,
 input,
@@ -401,8 +411,12 @@ p {
 }
 .ds-nav-link[aria-current="page"],
 .ds-nav-link.is-active {
-  color: var(--ds-accent);
-  background: var(--ds-accent-soft);
+  color: var(--ds-app-color, var(--ds-accent));
+  background: color-mix(
+    in srgb,
+    var(--ds-app-color, var(--ds-accent)) 10%,
+    var(--ds-panel)
+  );
   font-weight: 650;
 }
 .ds-action,
@@ -687,6 +701,19 @@ p {
     height: 44px;
   }
 }
+@media (max-width: 520px) {
+  .ds-lockup:has(.ds-lockup-product) {
+    display: grid;
+    justify-items: start;
+    gap: 2px;
+  }
+  .ds-lockup-product {
+    padding-left: 0;
+    border-left: 0;
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -701,7 +728,13 @@ p {
   }
 }
 
-/* Apply identity to a symbol, not an availability indicator. Always keep its label. */
+/* Product identity is separate from action, availability and financial semantics. */
+[data-diesis-app="site"] {
+  --ds-app-color: var(--diesis-app-site);
+}
+[data-diesis-app="portal"] {
+  --ds-app-color: var(--diesis-app-portal);
+}
 [data-diesis-app="explorer"] {
   --ds-app-color: var(--diesis-app-explorer);
 }
