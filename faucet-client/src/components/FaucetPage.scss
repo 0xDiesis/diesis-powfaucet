@@ -2,9 +2,9 @@ html.powfaucet, html.powfaucet body {
   margin: 0;
   padding: 0;
   height: 100%;
-  color: var(--diesis-text, #242727);
-  font-family: var(--diesis-font-sans, system-ui, sans-serif);
-  line-height: var(--diesis-line-height-body, 1.5);
+  color: var(--diesis-text);
+  font-family: var(--diesis-font-sans);
+  line-height: var(--diesis-line-height-body);
 }
 
 .faucet-wrapper {min-height:100%;display:flex;align-items:center;justify-content:center;background:var(--ds-bg);padding:24px 0;}
@@ -59,74 +59,74 @@ html.powfaucet, html.powfaucet body {
 .faucet-bootstrap .form-control,
 .faucet-bootstrap .form-select {
   min-height: 44px;
-  border-color: var(--diesis-border, rgba(36, 39, 39, 0.2));
-  background-color: var(--diesis-surface-sunken, #e5d6a9);
-  color: var(--diesis-text, #242727);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent);
+  border-color: var(--diesis-border);
+  background-color: var(--diesis-surface-sunken);
+  color: var(--diesis-text);
+  box-shadow: none;
 }
 
 .faucet-bootstrap .card,
 .faucet-bootstrap .alert {
-  border-color: var(--diesis-border, rgba(36, 39, 39, 0.2));
+  border-color: var(--diesis-border);
 }
 
 .faucet-bootstrap .alert {
-  color: var(--diesis-text, #242727);
+  color: var(--diesis-text);
   font-weight: 700;
 }
 
 .faucet-bootstrap .alert-danger {
   background:
-    linear-gradient(90deg, var(--diesis-danger, #d8443f) 0 4px, transparent 4px 100%),
-    var(--diesis-danger-soft, #ffe5df);
-  border-color: color-mix(in srgb, var(--diesis-danger, #d8443f) 55%, transparent);
-  color: var(--diesis-danger, #d8443f);
+    linear-gradient(90deg, var(--diesis-danger) 0 4px, transparent 4px 100%),
+    var(--diesis-danger-soft);
+  border-color: color-mix(in srgb, var(--diesis-danger) 55%, transparent);
+  color: var(--diesis-danger);
 }
 
 .faucet-bootstrap .alert-warning {
   background:
-    linear-gradient(90deg, var(--diesis-warning, #aa6b00) 0 4px, transparent 4px 100%),
-    var(--diesis-warning-soft, #fff1c9);
-  border-color: color-mix(in srgb, var(--diesis-warning, #aa6b00) 55%, transparent);
-  color: var(--diesis-warning, #aa6b00);
+    linear-gradient(90deg, var(--diesis-warning) 0 4px, transparent 4px 100%),
+    var(--diesis-warning-soft);
+  border-color: color-mix(in srgb, var(--diesis-warning) 55%, transparent);
+  color: var(--diesis-warning);
 }
 
 .faucet-bootstrap .alert-success {
   background:
-    linear-gradient(90deg, var(--diesis-success, #168a46) 0 4px, transparent 4px 100%),
-    var(--diesis-success-soft, #dcf7e6);
-  border-color: color-mix(in srgb, var(--diesis-success, #168a46) 55%, transparent);
-  color: var(--diesis-success, #168a46);
+    linear-gradient(90deg, var(--diesis-success) 0 4px, transparent 4px 100%),
+    var(--diesis-success-soft);
+  border-color: color-mix(in srgb, var(--diesis-success) 55%, transparent);
+  color: var(--diesis-success);
 }
 
 .faucet-bootstrap .alert-info {
   background:
-    linear-gradient(90deg, var(--diesis-accent-2, #28b0a4) 0 4px, transparent 4px 100%),
-    color-mix(in srgb, var(--diesis-accent-2, #28b0a4) 14%, var(--diesis-panel-solid, #fff7dd));
-  border-color: color-mix(in srgb, var(--diesis-accent-2, #28b0a4) 55%, transparent);
-  color: var(--diesis-text-strong, #171514);
+    linear-gradient(90deg, var(--diesis-accent-2) 0 4px, transparent 4px 100%),
+    color-mix(in srgb, var(--diesis-accent-2) 14%, var(--diesis-panel-solid));
+  border-color: color-mix(in srgb, var(--diesis-accent-2) 55%, transparent);
+  color: var(--diesis-text-strong);
 }
 
 .faucet-bootstrap .card {
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--diesis-primary, #00b84f) 5%, transparent),
+      color-mix(in srgb, var(--diesis-primary) 5%, transparent),
       transparent 34%
     ),
-    var(--diesis-panel-solid, #fff7dd);
-  box-shadow: var(--diesis-shadow-soft, 0 8px 22px rgba(36, 39, 39, 0.1));
+    var(--diesis-panel-solid);
+  box-shadow: var(--diesis-shadow-soft);
 }
 
 .faucet-loading .loading-spinner {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid var(--diesis-border, rgba(36, 39, 39, 0.2));
+  border: 1px solid var(--diesis-border);
   border-radius: 8px;
-  background: var(--diesis-panel-solid, #fff7dd);
+  background: var(--diesis-panel-solid);
   padding: 14px 16px;
-  box-shadow: var(--diesis-shadow-soft, 0 8px 22px rgba(36, 39, 39, 0.1));
+  box-shadow: var(--diesis-shadow-soft);
 }
 
 .faucet-loading .loading-spinner .spinner {
@@ -135,7 +135,7 @@ html.powfaucet, html.powfaucet body {
 }
 
 .faucet-loading .spinner-text {
-  color: var(--diesis-text-strong, #171514);
+  color: var(--diesis-text-strong);
   font-size: 14px;
   font-weight: 800;
 }
@@ -157,7 +157,7 @@ html.powfaucet, html.powfaucet body {
 .faucet-page .faucet-notifications .faucet-notification .alert {
   padding: 10px 12px;
   min-width: 300px;
-  box-shadow: var(--diesis-shadow-soft, 0 8px 22px rgba(36, 39, 39, 0.1));
+  box-shadow: var(--diesis-shadow-soft);
 }
 
 .faucet-page .faucet-footer {
@@ -166,7 +166,7 @@ html.powfaucet, html.powfaucet body {
   right: 0;
   padding: 4px;
   font-size: 12px;
-  color: var(--diesis-text-muted, #655f4d);
+  color: var(--diesis-text-muted);
   pointer-events: none;
 }
 
@@ -229,7 +229,7 @@ html.powfaucet, html.powfaucet body {
 
 .faucet-page .faucet-kicker {
   margin: 0 0 5px;
-  color: var(--diesis-primary, #00b84f);
+  color: var(--diesis-primary);
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 0;
@@ -238,8 +238,8 @@ html.powfaucet, html.powfaucet body {
 
 .faucet-page .faucet-title h1 {
   margin: 0 0 12px;
-  color: var(--diesis-text-strong, #171514);
-  font-family: var(--diesis-font-display, var(--diesis-font-sans, system-ui, sans-serif));
+  color: var(--diesis-text-strong);
+  font-family: var(--diesis-font-display);
   font-size: clamp(26px, 6vw, 34px);
   line-height: 1.05;
 }
@@ -249,7 +249,7 @@ html.powfaucet, html.powfaucet body {
 }
 
 .faucet-page .col-3 {
-  color: var(--diesis-text-muted, #655f4d);
+  color: var(--diesis-text-muted);
   font-size: 13px;
   font-weight: 700;
 }
@@ -258,44 +258,8 @@ html.powfaucet, html.powfaucet body {
   margin: 4px 0 0;
 }
 
-.faucet-page .faucet-actions button {
-  width: 100%;
-  border: none;
-  color: var(--diesis-primary-text, #ffffff);
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: 800;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 12px 24px color-mix(in srgb, var(--diesis-primary, #00b84f) 24%, transparent);
-  transition:
-    background-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
-}
-
-.faucet-page .faucet-actions button.start-action {
-  background-color: var(--diesis-primary, #00b84f);
-}
-
-.faucet-page .faucet-actions button.start-action:hover:not(:disabled) {
-  background-color: var(--diesis-primary-hover, #009a42);
-  transform: translateY(-1px);
-}
-
-.faucet-page .faucet-actions button.stop-action {
-  background-color: var(--diesis-danger, #d8443f);
-}
-
-.faucet-page .faucet-actions button:disabled {
-  background-color: var(--diesis-surface-strong, #dcc98f);
-  color: var(--diesis-text-soft, #857c63);
-  cursor: wait;
-  box-shadow: none;
-}
+.faucet-page .faucet-actions .ds-action { width:100%; }
+.faucet-page .faucet-actions .stop-action { background:var(--ds-error); color:var(--ds-bg); }
 
 .faucet-page .faucet-captcha {
   margin-top: 8px;
@@ -343,14 +307,14 @@ html.powfaucet, html.powfaucet body {
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--diesis-primary, #00b84f) 5%, transparent),
+      color-mix(in srgb, var(--diesis-primary) 5%, transparent),
       transparent 34%
     ),
-    var(--diesis-panel-solid, #fff7dd);
-  border: 1px solid var(--diesis-border, rgba(36, 39, 39, 0.2));
+    var(--diesis-panel-solid);
+  border: 1px solid var(--diesis-border);
   border-radius: 8px;
   padding: 8px;
-  box-shadow: var(--diesis-shadow-soft, 0 8px 22px rgba(36, 39, 39, 0.1));
+  box-shadow: var(--diesis-shadow-soft);
 }
 
 .faucet-page .pow-status .pow-progress-actions {
@@ -426,17 +390,17 @@ html.powfaucet, html.powfaucet body {
 
 .faucet-page .faucet-description {
   font-size: 11pt;
-  color: var(--diesis-text-muted, #655f4d);
+  color: var(--diesis-text-muted);
   margin-top: 16px;
 }
 
 .faucet-page .faucet-description .pow-home-container {
-  border-top: 1px solid var(--diesis-border, rgba(36, 39, 39, 0.2));
+  border-top: 1px solid var(--diesis-border);
   padding-top: 14px;
 }
 
 .faucet-page .table {
-  color: var(--diesis-text, #242727);
+  color: var(--diesis-text);
 }
 
 .faucet-page .status-sessions {
@@ -496,10 +460,7 @@ html.powfaucet {color-scheme:light dark;--bs-body-color:var(--ds-ink);--bs-body-
 .faucet-page .faucet-footer {position:static;text-align:right;padding-top:16px;}
 .faucet-bootstrap .card,.faucet-page .pow-status {background:var(--ds-panel);box-shadow:none;}
 .faucet-page .faucet-description {font-size:14px;}
-.pow-brand {display:flex;align-items:center;gap:10px;margin-bottom:24px;color:var(--diesis-app-faucet);font-weight:650;text-decoration:none;min-height:44px;}
-.pow-brand img {width:125px;height:30px;object-fit:contain;}.pow-brand .logo-dark {display:none;}
-@media(prefers-color-scheme:dark){.pow-brand .logo-light{display:none}.pow-brand .logo-dark{display:block}}
-@media(max-width:520px){.faucet-wrapper{padding:0}.faucet-container{max-width:calc(100% - 16px);padding:20px}.pow-brand img{width:108px;height:26px}}
+@media(max-width:520px){.faucet-wrapper{padding:0}.faucet-container{max-width:calc(100% - 16px);padding:20px}}
 
 /* Respect the available panel width on every route, including narrow screens. */
 .faucet-page { min-width: 0; max-width: 100%; }
@@ -516,3 +477,6 @@ html.powfaucet {color-scheme:light dark;--bs-body-color:var(--ds-ink);--bs-body-
 @media(max-width:520px){ .pow-header .ds-lockup-product { display:none; } }
 
 .faucet-bootstrap .form-control, .faucet-bootstrap .form-select { border-color:var(--ds-control-border); }
+
+.pow-source { display:flex; justify-content:center; padding:16px; }
+.pow-source a { display:inline-flex; align-items:center; min-height:44px; }

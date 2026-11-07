@@ -260,7 +260,7 @@ export class MiningPage extends React.PureComponent<IMiningPageProps, IMiningPag
         </div>
         <div className="faucet-actions center">
           <button 
-            className="btn btn-danger stop-action" 
+            className="ds-action stop-action"
             onClick={(evt) => this.onStopMiningClick(false)} 
             disabled={!this.state.clientConnected || this.state.closingSession}>
               {this.state.isClaimable ? "Stop Mining & Claim Rewards" : "Stop Mining"}

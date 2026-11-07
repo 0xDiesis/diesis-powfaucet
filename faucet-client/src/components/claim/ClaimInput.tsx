@@ -46,7 +46,7 @@ export class ClaimInput extends React.PureComponent<IClaimInputProps, IClaimInpu
         <div className="row">
           <div className="col-12 faucet-actions center">
             <button 
-              className="btn btn-success start-action" 
+              className="ds-action start-action"
               onClick={(evt) => this.onSubmitBtnClick()} 
               disabled={this.state.submitting}>
                 Claim Rewards

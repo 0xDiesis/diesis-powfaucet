@@ -179,6 +179,7 @@ svg.ds-icon {
 :focus-visible {
   outline: 2px solid var(--ds-accent);
   outline-offset: 3px;
+  box-shadow: none;
 }
 /* A grouped field owns its single focus boundary; its input adds no second ring. */
 .ds-field-group,

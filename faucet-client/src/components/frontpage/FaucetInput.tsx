@@ -100,7 +100,7 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
         : null}
         <div className="faucet-actions center">
           <button 
-            className="btn btn-success start-action" 
+            className="ds-action start-action"
             onClick={(evt) => this.onSubmitBtnClick()} 
             disabled={this.state.submitting}>
               {this.state.submitting ?
