@@ -18,6 +18,7 @@
   --diesis-surface-rgb: 244 240 233;
   --ds-warm: #79428e;
   --ds-shadow: 0 12px 40px #3925380c;
+  --ds-app-stripe-strength: 100%;
   --diesis-app-site: #8e3d25;
   --diesis-app-portal: #2d5f87;
   --diesis-app-explorer: #68428a;
@@ -45,6 +46,7 @@
   --diesis-surface-rgb: 28 25 34;
   --ds-warm: #cbb3ee;
   --ds-shadow: 0 12px 40px #00000018;
+  --ds-app-stripe-strength: 60%;
   --diesis-app-site: #efb08a;
   --diesis-app-portal: #98c7ed;
   --diesis-app-explorer: #c8aaed;
@@ -57,7 +59,10 @@
 
 :root,
 :root[data-diesis-theme] {
-  --ds-app-stripe-width: 3px;
+  --ds-app-stripe-width: 2px;
+  --ds-content-max: 1280px;
+  --ds-page-gutter: 48px;
+  --ds-sidebar-width: 240px;
   --diesis-font-editorial:
     "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --diesis-font-display: "Avenir Next", ui-sans-serif, system-ui, sans-serif;
@@ -163,8 +168,18 @@ body {
 }
 /* Place on the full-width outer shell with its data-diesis-app identity. */
 .ds-app-shell {
-  border-top: var(--ds-app-stripe-width) solid
-    var(--ds-app-color, var(--ds-accent));
+  --ds-app-stripe-color: color-mix(
+    in srgb,
+    var(--ds-app-color, var(--ds-accent)) var(--ds-app-stripe-strength),
+    var(--ds-bg)
+  );
+  border-top: var(--ds-app-stripe-width) solid var(--ds-app-stripe-color);
+}
+/* Apply once to each header/content/footer lane inside its available workspace. */
+.ds-container {
+  width: min(var(--ds-content-max), calc(100% - 2 * var(--ds-page-gutter)));
+  min-width: 0;
+  margin-inline: auto;
 }
 button,
 input,
@@ -234,6 +249,7 @@ p {
 }
 .ds-brand {
   display: inline-flex;
+  min-height: 44px;
   align-items: center;
   gap: 10px;
   color: var(--ds-ink);
@@ -359,6 +375,18 @@ p {
 .ds-drawer::backdrop {
   background: #18121fba;
   backdrop-filter: blur(3px);
+}
+.ds-drawer-frame {
+  padding: 0;
+}
+.ds-drawer-body {
+  min-height: 100%;
+  padding: 24px;
+}
+@media (max-width: 420px) {
+  .ds-drawer-frame {
+    border-left: 0;
+  }
 }
 .ds-drawer-head {
   display: flex;
@@ -682,7 +710,17 @@ p {
 .preview-row.is-invalid {
   color: var(--ds-error);
 }
+@media (max-width: 1023px) {
+  :root,
+  :root[data-diesis-theme] {
+    --ds-page-gutter: 32px;
+  }
+}
 @media (max-width: 700px) {
+  :root,
+  :root[data-diesis-theme] {
+    --ds-page-gutter: 20px;
+  }
   .ds-lockup {
     --ds-lockup-height: 26px;
   }

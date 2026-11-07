@@ -43,7 +43,7 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
       inputTypes.push("ENS name");
     }
     else {
-      inputTypes.push("ETH address");
+      inputTypes.push("Diesis testnet 0x address");
       if(this.props.faucetConfig.modules.ensname)
         inputTypes.push("ENS name");
     }
@@ -58,14 +58,18 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
 
     return (
       <div className="faucet-inputs">
+        <label className="recipient-field">
+          <span className="recipient-label">Recipient address</span>
         <input 
           className="form-control" 
           value={this.state.targetAddr} 
-          aria-label={inputTypes.join(" or ")}
+          aria-label="Recipient address"
           autoComplete="off"
-          placeholder={"Please enter " + (inputTypes.join(" or "))} 
+          placeholder={this.props.faucetConfig.modules.ensname ? inputTypes.join(" or ") : "0x…"}
           onChange={(evt) => this.setState({ targetAddr: evt.target.value })} 
         />
+        </label>
+        <p className="recipient-hint">Enter your {inputTypes.join(" or ")}. Never enter a private key or seed phrase.</p>
         {needGithubAuth ? 
           <GithubLogin 
             faucetConfig={this.props.faucetConfig} 

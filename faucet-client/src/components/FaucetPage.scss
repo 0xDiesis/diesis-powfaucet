@@ -7,8 +7,9 @@ html.powfaucet, html.powfaucet body {
   line-height: var(--diesis-line-height-body);
 }
 
-.faucet-wrapper {min-height:100%;display:flex;align-items:center;justify-content:center;background:var(--ds-bg);padding:24px 0;}
-.faucet-container {position:relative;padding:24px;margin:20px;background:var(--ds-panel);border:1px solid var(--ds-line);border-radius:8px;max-width:calc(100% - 40px);}
+html.powfaucet body {display:flex;flex-direction:column;min-height:100vh;}
+.faucet-wrapper {flex:1;display:flex;align-items:center;justify-content:center;background:var(--ds-bg);padding:24px 0;}
+.faucet-container {position:relative;padding:24px;margin:20px 0;background:var(--ds-panel);border:1px solid var(--ds-line);border-radius:8px;max-width:100%;}
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/variables-dark";
@@ -219,7 +220,7 @@ html.powfaucet, html.powfaucet body {
 .faucet-page .faucet-inputs {
   display: grid;
   gap: 10px;
-  margin: 18px 8px 0 8px;
+  margin: 18px 0 0;
 }
 
 .faucet-page .faucet-title {
@@ -227,22 +228,11 @@ html.powfaucet, html.powfaucet body {
   text-align: center;
 }
 
-.faucet-page .faucet-kicker {
-  margin: 0 0 5px;
-  color: var(--diesis-primary);
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-
-.faucet-page .faucet-title h1 {
-  margin: 0 0 12px;
-  color: var(--diesis-text-strong);
-  font-family: var(--diesis-font-display);
-  font-size: clamp(26px, 6vw, 34px);
-  line-height: 1.05;
-}
+.faucet-page .faucet-title .diesis-eyebrow {margin:0 0 8px;}
+.faucet-page .faucet-title h1 {margin:0 0 12px;}
+.faucet-page .recipient-field {display:grid;gap:6px;}
+.faucet-page .recipient-label {font-size:.8125rem;font-weight:650;color:var(--ds-muted);}
+.faucet-page .recipient-hint {margin:0;font-size:.875rem;line-height:1.55;color:var(--ds-muted);}
 
 .faucet-page .row {
   row-gap: 8px;
@@ -419,13 +409,9 @@ html.powfaucet, html.powfaucet body {
 }
 
 @media screen and (max-width: 520px) {
-  .faucet-wrapper {
-    align-items: stretch;
-  }
-
   .faucet-container {
     width: 100%;
-    margin: 8px;
+    margin: 8px 0;
     padding: 14px;
   }
 
@@ -452,15 +438,13 @@ html.powfaucet {color-scheme:light dark;--bs-body-color:var(--ds-ink);--bs-body-
 /* Bootstrap removes outlines on focus; restore the single shared Signal ring. */
 .faucet-bootstrap :is(input,select,textarea,button,.btn,a):focus-visible {outline:2px solid var(--ds-accent);outline-offset:3px;box-shadow:none;}
 .faucet-bootstrap .modal-content {background:var(--ds-panel);color:var(--ds-ink);}
-.faucet-page .faucet-title h1 {font-size:clamp(2.2rem,3.4vw,3.3rem);line-height:1.12;}
-.faucet-page .faucet-kicker {color:var(--diesis-app-faucet);}
 .faucet-page .faucet-actions button {box-shadow:none;}
 .faucet-page .faucet-actions button:disabled {cursor:not-allowed;}
 .faucet-page .faucet-frontimage .image {max-height:120px;}
 .faucet-page .faucet-footer {position:static;text-align:right;padding-top:16px;}
 .faucet-bootstrap .card,.faucet-page .pow-status {background:var(--ds-panel);box-shadow:none;}
 .faucet-page .faucet-description {font-size:14px;}
-@media(max-width:520px){.faucet-wrapper{padding:0}.faucet-container{max-width:calc(100% - 16px);padding:20px}}
+@media(max-width:520px){.faucet-wrapper{padding:0}.faucet-container{max-width:100%;padding:20px}}
 
 /* Respect the available panel width on every route, including narrow screens. */
 .faucet-page { min-width: 0; max-width: 100%; }
@@ -471,11 +455,10 @@ html.powfaucet {color-scheme:light dark;--bs-body-color:var(--ds-ink);--bs-body-
   .faucet-page:has(.page-claim), .faucet-page:has(.page-details) { width: 100%; }
 }
 
-.pow-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; }
-.pow-header .ds-brand { min-height:44px; }
+.pow-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding-block:20px; border-bottom:1px solid var(--ds-line); }
 .pow-header .theme-control form { display:contents; }
 
 .faucet-bootstrap .form-control, .faucet-bootstrap .form-select { border-color:var(--ds-control-border); }
 
-.pow-source { display:flex; justify-content:center; padding:16px; }
+.pow-source { display:flex; justify-content:center; padding-block:16px; }
 .pow-source a { display:inline-flex; align-items:center; min-height:44px; }

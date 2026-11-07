@@ -172,8 +172,8 @@ export class FaucetPage extends React.PureComponent<IFaucetPageProps, IFaucetPag
         <FaucetConfigContext.Provider value={this.state.faucetConfig}>
           <FaucetPageContext.Provider value={this.pageContext}>
             <div className="faucet-title">
-              {showBrandKicker ? <p className="faucet-kicker">Diesis faucet</p> : null}
-              <h1 className="center">{this.state.faucetConfig.faucetTitle}</h1>
+              {showBrandKicker ? <p className="diesis-eyebrow">Diesis faucet</p> : null}
+              <h1 className="diesis-page-title">{this.state.faucetConfig.faucetTitle}</h1>
               <div className="faucet-status-link" onClick={() => this.onFaucetStatusClick()}></div>
             </div>
             {this.renderStatusAlerts()}
