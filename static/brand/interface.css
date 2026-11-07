@@ -1,0 +1,724 @@
+/* Signal: the portable Diesis interface theme. Import after system.css.
+ * Brand and app identity colors are separate from transaction/availability states. */
+:root,
+:root[data-diesis-theme="light"] {
+  --ds-bg: #f4f0e9;
+  --ds-panel: #fffdf8;
+  --ds-subtle: #eae3da;
+  --ds-ink: #292330;
+  --ds-muted: #675d69;
+  --ds-line: #d5cbd0;
+  --ds-control-border: #897888;
+  --ds-accent: #8e3d25;
+  --ds-accent-soft: #f3e0d5;
+  --ds-on-accent: #ffffff;
+  --ds-error: #ac233f;
+  --ds-success: #276448;
+  --ds-warning: #87500d;
+  --diesis-surface-rgb: 244 240 233;
+  --ds-warm: #79428e;
+  --ds-shadow: 0 12px 40px #3925380c;
+  --diesis-app-explorer: #68428a;
+  --diesis-app-exchange: #956116;
+  --diesis-app-mpc: #386b75;
+  --diesis-app-mcp: #a33f5e;
+  --diesis-app-faucet: #376b61;
+  --diesis-app-core: #4f5d96;
+}
+
+:root[data-diesis-theme="dark"] {
+  --ds-bg: #1c1922;
+  --ds-panel: #25212c;
+  --ds-subtle: #312b38;
+  --ds-ink: #f7f0e8;
+  --ds-muted: #c7bbc9;
+  --ds-line: #514656;
+  --ds-control-border: #8e7e97;
+  --ds-accent: #efb08a;
+  --ds-accent-soft: #46332e;
+  --ds-on-accent: #2d1b16;
+  --ds-error: #ff9db4;
+  --ds-success: #91c7a8;
+  --ds-warning: #edc272;
+  --diesis-surface-rgb: 28 25 34;
+  --ds-warm: #cbb3ee;
+  --ds-shadow: 0 12px 40px #00000018;
+  --diesis-app-explorer: #c8aaed;
+  --diesis-app-exchange: #edc272;
+  --diesis-app-mpc: #93cad5;
+  --diesis-app-mcp: #efa4bd;
+  --diesis-app-faucet: #99caba;
+  --diesis-app-core: #aab8ef;
+}
+
+:root,
+:root[data-diesis-theme] {
+  --diesis-font-editorial:
+    "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --diesis-font-display: "Avenir Next", ui-sans-serif, system-ui, sans-serif;
+  --diesis-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-surface: var(--ds-bg);
+  --color-surface-elevated: var(--ds-panel);
+  --color-surface-sunken: var(--ds-subtle);
+  --color-text-primary: var(--ds-ink);
+  --color-text-secondary: var(--ds-muted);
+  --color-text-muted: var(--ds-muted);
+  --color-text-inverse: var(--ds-on-accent);
+  --color-border: var(--ds-line);
+  --color-border-subtle: var(--ds-line);
+  --color-accent-primary: var(--ds-accent);
+  --color-accent-primary-soft: var(--ds-accent-soft);
+  --color-link: var(--ds-accent);
+  --color-error: var(--ds-error);
+  --diesis-primary: var(--ds-accent);
+  --diesis-primary-text: var(--ds-on-accent);
+  --diesis-primary-hover: var(--ds-accent);
+  --diesis-surface: var(--ds-bg);
+  --diesis-surface-raised: var(--ds-panel);
+  --diesis-surface-soft: var(--ds-subtle);
+  --diesis-surface-sunken: var(--ds-subtle);
+  --diesis-surface-strong: var(--ds-subtle);
+  --diesis-surface-subtle: var(--ds-panel);
+  --diesis-panel: var(--ds-panel);
+  --diesis-panel-solid: var(--ds-panel);
+  --diesis-panel-strong: var(--ds-subtle);
+  --diesis-panel-translucent: color-mix(
+    in srgb,
+    var(--ds-panel) 94%,
+    transparent
+  );
+  --diesis-surface-empty: var(--ds-panel);
+  --diesis-surface-auth: var(--ds-accent-soft);
+  --diesis-surface-protected: color-mix(
+    in srgb,
+    var(--ds-error) 8%,
+    var(--ds-panel)
+  );
+  --diesis-text: var(--ds-ink);
+  --diesis-text-strong: var(--ds-ink);
+  --diesis-text-muted: var(--ds-muted);
+  --diesis-text-soft: var(--ds-muted);
+  --diesis-text-inverse: var(--ds-on-accent);
+  --diesis-border: var(--ds-line);
+  --diesis-border-subtle: var(--ds-line);
+  --diesis-border-strong: var(--ds-muted);
+  --diesis-control-border: var(--ds-control-border);
+  --diesis-separator: var(--ds-line);
+  --diesis-secondary: var(--ds-panel);
+  --diesis-secondary-text: var(--ds-ink);
+  --diesis-accent: var(--ds-accent);
+  --diesis-accent-2: var(--diesis-app-mpc);
+  --diesis-tertiary: var(--ds-warm);
+  --diesis-tertiary-text: var(--ds-ink);
+  --diesis-row-hover: var(--ds-accent-soft);
+  --diesis-nav-active-bg: var(--ds-accent-soft);
+  --diesis-focus: var(--ds-accent);
+  --diesis-focus-ring: 0 0 0 2px var(--ds-accent);
+  --diesis-link: var(--ds-accent);
+  --diesis-danger: var(--ds-error);
+  --diesis-danger-soft: color-mix(
+    in srgb,
+    var(--ds-error) 10%,
+    var(--ds-panel)
+  );
+  --diesis-success: var(--ds-success);
+  --diesis-success-soft: color-mix(
+    in srgb,
+    var(--ds-success) 10%,
+    var(--ds-panel)
+  );
+  --diesis-warning: var(--ds-warning);
+  --diesis-warning-soft: color-mix(
+    in srgb,
+    var(--ds-warning) 10%,
+    var(--ds-panel)
+  );
+  --diesis-shadow: var(--ds-shadow);
+  --diesis-shadow-soft: var(--ds-shadow);
+  --dx-chart-bg: var(--ds-panel);
+  --dx-chart-text: var(--ds-ink);
+  --dx-chart-grid: var(--ds-line);
+  --dx-chart-border: var(--ds-line);
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--ds-ink);
+  background: var(--ds-bg);
+  font-family: var(--diesis-font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.diesis-app-surface {
+  background: var(--ds-bg);
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+summary {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+a {
+  color: var(--ds-accent);
+  text-underline-offset: 0.22em;
+}
+svg.ds-icon {
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
+:focus-visible {
+  outline: 2px solid var(--ds-accent);
+  outline-offset: 3px;
+}
+/* A grouped field owns its single focus boundary; its input adds no second ring. */
+.ds-field-group,
+.ds-input {
+  border-color: var(--ds-control-border);
+}
+.ds-field-group:focus-within {
+  border-color: var(--ds-accent);
+  box-shadow: 0 0 0 1px var(--ds-accent);
+}
+.ds-field-group :is(input, select, textarea):focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+::selection {
+  color: var(--ds-on-accent);
+  background: var(--ds-accent);
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+.sr-only,
+.skip-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.skip-link:focus {
+  position: fixed;
+  z-index: 100;
+  top: 12px;
+  left: 12px;
+  padding: 12px 20px;
+  color: var(--ds-on-accent);
+  background: var(--ds-accent);
+}
+.ds-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ds-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+/* One lockup for every app header: same mark, wordmark, size and gap. */
+.ds-lockup {
+  --ds-lockup-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ds-ink);
+  line-height: 1;
+}
+.ds-lockup-art {
+  display: block;
+  width: auto;
+  height: var(--ds-lockup-height);
+  aspect-ratio: 170 / 43;
+  overflow: visible;
+}
+.ds-lockup-mark {
+  color: var(--ds-accent);
+}
+.ds-lockup-product {
+  padding-left: 10px;
+  border-left: 1px solid var(--ds-line);
+  color: var(--ds-app-color, var(--ds-muted));
+  font-family: var(--diesis-font-display);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+.ds-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 40px;
+  color: var(--ds-accent);
+}
+.ds-brand strong {
+  font-family: var(--diesis-font-display);
+  font-size: 1.6rem;
+  font-weight: 750;
+  letter-spacing: -0.055em;
+}
+.ds-brand small {
+  margin-left: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ds-muted);
+}
+.theme-control {
+  display: flex;
+  flex: 0 0 auto;
+  padding: 2px;
+  border: 1px solid var(--ds-line);
+  border-radius: 8px;
+  background: var(--ds-panel);
+}
+.theme-control button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  color: var(--ds-muted);
+  background: transparent;
+}
+.theme-control button:is(:hover, .is-active) {
+  background: var(--ds-subtle);
+  color: var(--ds-ink);
+}
+.ds-menu-button,
+.ds-close-button,
+.ds-icon-button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  border: 1px solid var(--ds-line);
+  border-radius: 8px;
+  color: var(--ds-ink);
+  background: var(--ds-panel);
+}
+.ds-menu-button:hover,
+.ds-close-button:hover,
+.ds-icon-button:hover {
+  border-color: var(--ds-accent);
+}
+.ds-copy-control {
+  display: inline-flex;
+  vertical-align: middle;
+}
+.ds-copy-button {
+  border-color: transparent;
+  color: var(--ds-muted);
+  background: transparent;
+}
+.ds-copy-button:hover {
+  border-color: transparent;
+  color: var(--ds-ink);
+  background: var(--ds-subtle);
+}
+.ds-drawer {
+  overscroll-behavior: contain;
+  width: min(420px, 100%);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0 0 0 auto;
+  padding: 24px;
+  border: 0;
+  border-left: 1px solid var(--ds-line);
+  color: var(--ds-ink);
+  background: var(--ds-panel);
+  box-shadow: var(--ds-shadow);
+}
+.ds-drawer::backdrop {
+  background: #18121fba;
+  backdrop-filter: blur(3px);
+}
+.ds-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.ds-drawer-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.ds-drawer nav,
+.ds-drawer section {
+  display: grid;
+  gap: 5px;
+}
+.ds-drawer nav {
+  gap: 24px;
+}
+.ds-nav-label,
+.diesis-eyebrow,
+.page-kicker {
+  color: var(--ds-muted);
+  font-family: var(--diesis-font-mono);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.ds-nav-label {
+  margin: 0 0 5px;
+}
+.ds-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  border-radius: 7px;
+  padding: 8px 12px;
+  color: var(--ds-muted);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+.ds-nav-link:hover {
+  color: var(--ds-ink);
+  background: var(--ds-subtle);
+}
+.ds-nav-link[aria-current="page"],
+.ds-nav-link.is-active {
+  color: var(--ds-accent);
+  background: var(--ds-accent-soft);
+  font-weight: 650;
+}
+.ds-action,
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  border: 1px solid var(--ds-accent);
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: var(--ds-on-accent);
+  background: var(--ds-accent);
+  font-size: 0.9375rem;
+  font-weight: 650;
+  line-height: 1.4;
+  text-decoration: none;
+  transition:
+    box-shadow 150ms,
+    transform 150ms;
+}
+.ds-action:hover,
+.cta-link:hover {
+  box-shadow: 0 0 0 3px var(--ds-accent-soft);
+  transform: translateY(-1px);
+}
+.ds-action.is-secondary,
+.cta-link.is-secondary {
+  border-color: var(--ds-line);
+  color: var(--ds-ink);
+  background: transparent;
+}
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  border: 1px solid var(--ds-line);
+  border-radius: 5px;
+  padding: 2px 7px;
+  color: var(--ds-muted);
+  background: var(--ds-panel);
+  font-size: 0.75rem;
+  font-weight: 550;
+  white-space: nowrap;
+}
+.page-grid {
+  display: grid;
+  gap: 28px;
+  width: 100%;
+  min-width: 0;
+}
+.page-header {
+  display: grid;
+  gap: 14px;
+  max-width: 800px;
+}
+.page-header > * {
+  margin: 0;
+}
+.diesis-page-title {
+  margin: 0;
+  max-width: 25ch;
+  color: var(--ds-ink);
+  font-family: var(--diesis-font-display);
+  font-size: clamp(2.2rem, 3.4vw, 3.3rem);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.page-summary,
+.diesis-copy {
+  max-width: 66ch;
+  margin: 0;
+  color: var(--ds-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+.content-grid,
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.content-grid.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.info-panel,
+.tool-panel,
+.info-card {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--ds-line);
+  border-radius: 8px;
+  background: var(--ds-panel);
+}
+.info-panel h2,
+.tool-panel h2,
+.info-card h2 {
+  margin: 0 0 12px;
+  color: var(--ds-ink);
+  font-family: var(--diesis-font-display);
+  font-size: 1.125rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+.info-panel p,
+.info-card > span {
+  color: var(--ds-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+.info-panel p:last-child {
+  margin-bottom: 0;
+}
+.info-card > p {
+  color: var(--ds-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.tool-panel {
+  display: grid;
+  gap: 16px;
+}
+.feature-icon {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  place-items: center;
+  color: var(--ds-app-color, var(--ds-accent));
+  background: color-mix(
+    in srgb,
+    var(--ds-app-color, var(--ds-accent)) 10%,
+    var(--ds-panel)
+  );
+  border-radius: 8px;
+}
+.info-card > .feature-icon {
+  color: var(--ds-app-color, var(--ds-accent));
+}
+/* A labelled static before/after example, independent of framework or app. */
+.ds-format-example {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--ds-line);
+  border-left: 3px solid var(--ds-accent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ds-accent) 6%, var(--ds-panel));
+}
+.ds-format-example > .ds-icon,
+.ds-format-expression strong {
+  color: var(--ds-accent);
+}
+.ds-format-expression {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--diesis-font-mono);
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+.ds-format-expression > span:not(.sr-only) {
+  color: var(--ds-muted);
+}
+.ds-format-note {
+  margin: 4px 0 0;
+  color: var(--ds-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+.ds-format-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.plain-list {
+  display: grid;
+  gap: 16px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.plain-list li {
+  display: grid;
+  gap: 4px;
+}
+.plain-list span {
+  color: var(--ds-muted);
+}
+.contract-list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+.contract-list dt {
+  color: var(--ds-muted);
+  font-size: 0.8125rem;
+  text-transform: capitalize;
+}
+.contract-list dd {
+  margin: 0;
+  font-family: var(--diesis-font-mono);
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.input-row input {
+  flex: 1;
+  min-width: 120px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--ds-line);
+  border-radius: 8px;
+  color: var(--ds-ink);
+  background: var(--ds-bg);
+}
+.input-row button {
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 1px solid var(--ds-accent);
+  border-radius: 8px;
+  color: var(--ds-on-accent);
+  background: var(--ds-accent);
+  font-weight: 650;
+}
+.input-row button:disabled {
+  color: var(--ds-muted);
+  background: var(--ds-subtle);
+  border-color: var(--ds-line);
+}
+.preview-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ds-muted);
+}
+.preview-row.is-invalid {
+  color: var(--ds-error);
+}
+@media (max-width: 700px) {
+  .ds-lockup {
+    --ds-lockup-height: 26px;
+  }
+  .content-grid,
+  .content-grid.two-col,
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .info-panel,
+  .info-card,
+  .tool-panel {
+    padding: 20px;
+  }
+  .theme-control button {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ds-action:hover,
+  .cta-link:hover {
+    transform: none;
+  }
+}
+
+/* Apply identity to a symbol, not an availability indicator. Always keep its label. */
+[data-diesis-app="explorer"] {
+  --ds-app-color: var(--diesis-app-explorer);
+}
+[data-diesis-app="exchange"] {
+  --ds-app-color: var(--diesis-app-exchange);
+}
+[data-diesis-app="mpc"] {
+  --ds-app-color: var(--diesis-app-mpc);
+}
+[data-diesis-app="mcp"] {
+  --ds-app-color: var(--diesis-app-mcp);
+}
+[data-diesis-app="faucet"] {
+  --ds-app-color: var(--diesis-app-faucet);
+}
+[data-diesis-app="core-sdk"] {
+  --ds-app-color: var(--diesis-app-core);
+}
+.ds-app-symbol {
+  color: var(--ds-app-color, var(--ds-accent));
+}
