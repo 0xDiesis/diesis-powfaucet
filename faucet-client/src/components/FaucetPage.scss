@@ -7,7 +7,7 @@ html.powfaucet, html.powfaucet body {
   line-height: var(--diesis-line-height-body);
 }
 
-html.powfaucet body {display:flex;flex-direction:column;min-height:100vh;}
+html.powfaucet body {height:auto;display:flex;flex-direction:column;min-height:100vh;}
 .faucet-wrapper {flex:1;display:flex;align-items:center;justify-content:center;background:var(--ds-bg);padding:24px 0;}
 .faucet-container {position:relative;padding:24px;margin:20px 0;background:var(--ds-panel);border:1px solid var(--ds-line);border-radius:8px;max-width:100%;}
 @import "../../node_modules/bootstrap/scss/functions";
@@ -275,9 +275,6 @@ html.powfaucet body {display:flex;flex-direction:column;min-height:100vh;}
   height: 50px;
 }
 
-.faucet-page .pow-header {
-  position: relative;
-}
 
 
 .faucet-page .txhash {
@@ -455,8 +452,7 @@ html.powfaucet {color-scheme:light dark;--bs-body-color:var(--ds-ink);--bs-body-
   .faucet-page:has(.page-claim), .faucet-page:has(.page-details) { width: 100%; }
 }
 
-.pow-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding-block:20px; border-bottom:1px solid var(--ds-line); }
-.pow-header .theme-control form { display:contents; }
+.theme-control form { display:contents; }
 
 .faucet-bootstrap .form-control, .faucet-bootstrap .form-select { border-color:var(--ds-control-border); }
 
